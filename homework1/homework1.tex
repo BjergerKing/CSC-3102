@@ -1,0 +1,168 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{James Singleton}
+\lhead{CSC 3102: Homework 1}
+\rfoot{\thepage}
+
+\begin{document}
+
+%Question 1
+\begin{flushleft}
+1. In non-decreasing order:
+\end{flushleft}
+\begin{itemize}
+	\item $ f_{13}(n)=2^{10} $
+    \item $ f_{10}(n)=\log \log n $
+    \item $ f_{9}(n)=\log \sqrt{n} $
+    \item $ f_{6}(n)=\log^3 n $
+    \item $ f_{1}(n)=n^{1/2} $
+    \item $ f_{2}(n)=\sqrt{2n} $
+    \item $ f_{12}(n)=2^{\log n} $
+    \item $ f_{3}(n)=n+1 $
+    \item $ f_{7}(n)=7n\log n $
+    \item $ f_{11}(n)=6n^4+9n^3 $
+    \item $ f_{8}(n)=n^{\log \log n} $
+    \item $ f_{4}(n)=2^n $
+    \item $ f_{5}(n)=100^n $
+\end{itemize}
+\newpage
+
+%Question 2
+\begin{flushleft}
+2. Show that $ (n+3)^3 $ is $ O(n^3) $.
+\end{flushleft}
+\begin{align*}
+(n+3)^3 &\leq c\cdot n^3 &&\text{for } n \geq n_{0} \geq 1\\
+n^3+9n^2+27n+27 &\leq c\cdot n^3\\
+n^3+9n^2+27n &\leq c\cdot n^3-27 &&\text{let } n_{0}=1 \\
+1 + 9 + 27 &\leq c-27 &&\text{let } c=64\\
+37 &\leq 64-27\\
+37 &\leq 37 \\
+\end{align*}
+\begin{center}
+$ \therefore (n+3)^3 \text{ is } O(n^3) $ \\[1.5in]
+\end{center}
+
+%Question 3
+\begin{flushleft}
+3. Show that $ n^2 $ is $ \Omega(n\log n) $.
+\end{flushleft}
+\begin{align*}
+n^2 &\geq c \cdot n\log n &&\text{for } n\geq n_{0} \geq 1 \\
+n^2 &\geq c \cdot n\log_{2} n &&\text{let } c=1\\
+n &\geq n\log_{2} n &&\text{let } n_{0}=1\\
+1 &\geq 0 \\
+\end{align*}
+\begin{center}
+$ \therefore n^2 \text{ is } \Omega(n\log n) $
+\end{center}
+\newpage
+
+%Question 4
+\begin{flushleft}
+4. Show that if $ d(n) $ is $ O(e(n)) $, then $ d(n)\cdot f(n) $ is $ O(e(n)\cdot g(n))$.
+\end{flushleft}
+\begin{align*}
+d(n) &\leq c_{1} \cdot e(n) &&\text{, for } n\geq n_{1}\\
+f(n) &\leq c_{2} \cdot g(n) &&\text{, for } n\geq n_{2}\\
+d(n) \cdot f(n) &\leq c_{3}(e(n)\cdot g(n)) &&\text{, for } n\geq n_{3}\\ 
+\end{align*}
+\begin{center}
+Assume $n_{3}=max(n_{1},n_{2})$ and $c_{3}=max(c_{1},c_{2})$.\\
+It follows that $d(n) \cdot f(n) \leq c_{3}(e(n)\cdot g(n))$.\\
+$\therefore \text{ } d(n) \cdot f(n) \text{ is } O(e(n)\cdot f(n))$\\[1.5in]
+\end{center}
+
+%Question 5
+\begin{flushleft}
+5. Determine the Big-$O$ bound of the following code, given input size $n$
+\end{flushleft}
+\begin{align*}
+&for(i\leftarrow 1; i \leq n; i \leftarrow 2i)\\
+&\quad for(j \leftarrow 1;j\leq i; j \leftarrow j+1)\\
+&\qquad \text{print } A[j]\\
+\end{align*}
+\begin{center}
+\underline{Step through, let $n=8$}
+\end{center}
+\begin{align*}
+&i=1 \quad j=1\\
+&i=2 \quad j=1 \quad 2 \\
+&i=4 \quad j=1 \quad 2 \quad 3 \quad 4 \\
+&i=8 \quad j=1 \quad 2 \quad 3 \quad 4 \quad 5 \quad 6 \quad 7 \quad 8
+\end{align*}
+\begin{center}
+Looking at the output of $j$, we can see it is $1+\log_{2}n$ high and $n$ wide.\\
+This gives us $f(n)=O(\log n)\cdot O(n)\cdot O(1)=O(n\log n)$.\\
+$\therefore \text{ } f(n) \text{ is } O(n\log n)$
+\end{center}
+\newpage
+
+%Question 6
+\begin{flushleft}
+6. Assume a simple array $A$, indexed beginning at $0$, containing $n$ values, with a maximum capacity of $m$ values. There are no gaps between values in the array. Write a function to \textit{insert} a value $x$ at the beginning of the array. Preserve all existing values and leave no gaps. In the event of an error, simply throw an exception.\\[.5in]
+
+$i=0$\\
+insert($x,i,n,m,A$) \\
+\quad if($n<m$) \\
+\qquad for($j=n$; $j>i$; $j=j-1$) \\
+\qquad \quad $A[j]=A[j-1]$ \\
+\qquad $A[i]=x$\\
+\qquad $n=n+1$\\
+\quad else \\
+\qquad throw $A$ is full exception \\[1.5in]
+
+%Question 7
+7. Write a function to \textit{remove} the first value at the beginning of array $A$. Preserve all existing values and leave no gaps.\\[.5in]
+$i=0$\\
+remove($i,n,A$)\\
+\quad if($n>0$) \\
+\qquad for($j=i$; $j<n$; $j=j+1$)\\
+\quad \qquad $A[j]=A[j+1]$\\
+\qquad $n=n-1$\\
+\quad else \\
+\qquad throw $A$ is empty exception
+\newpage
+
+%Question 8
+8. Write a function to \textit{insert} a value $x$ at index $i$ of array $A$. Preserve all existing values and leave no gaps.\\[.5in]
+
+insert($x,i,n,m,A$) \\
+\quad if($n<m$) \\
+\qquad for($j=n$; $j>i$; $j=j-1$) \\
+\qquad \quad $A[j]=A[j-1]$ \\
+\qquad $A[i]=x$\\
+\qquad $n=n+1$\\
+\quad else \\
+\qquad throw $A$ is full exception \\[1.5in]
+
+%Question 9
+9. Write a function to \textit{remove} the first value at index $i$ of array $A$. Preserve all existing values and leave no gaps.\\[.5in]
+remove($i,n,A$)\\
+\quad if($n>0$) \\
+\qquad for($j=i$; $j<n$; $j=j+1$)\\
+\quad \qquad $A[j]=A[j+1]$\\
+\qquad $n=n-1$\\
+\quad else \\
+\qquad throw $A$ is empty exception
+\newpage
+
+%Question 10
+10. Write a function to \textit{reverse} the contents of array $A$. Do so \textit{without} introducing any additional sequence containers.\\[.5in]
+reverse($n,A$)\\
+\quad if($n>0$)\\
+\qquad for($j=0$; $j<\frac{n}{2}$; $j=j+1$)\\
+\quad \qquad temp = $A[j]$\\
+\quad \qquad $A[j] = A[n-j-1]$\\
+\quad \qquad $A[n-j-1]=$ temp\\
+\quad else \\
+\qquad throw $A$ is empty exception
+
+\end{flushleft}
+
+\end{document}
